@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn,Column } from "typeorm";
-
+import { Entity, PrimaryGeneratedColumn,Column, BeforeInsert } from "typeorm";
+import {hash} from 'bcrypt';
 @Entity({name : 'users'})
 export class User {
     @PrimaryGeneratedColumn()
@@ -23,7 +23,7 @@ export class User {
     @Column()
     password:string;
 
-    @Column()
+    @Column({default: 'default_token'})
     notification_token:string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -31,6 +31,12 @@ export class User {
   
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updated_at: Date;
+
+
+    @BeforeInsert()
+    async hashPassword(){
+        this.password=await hash(this.password,Number(process.env.HASH_SALT));
+    }
 
     
 }
