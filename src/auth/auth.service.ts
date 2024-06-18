@@ -43,6 +43,9 @@ export class AuthService {
         const roles = await this.rolesRepository.findBy({id: In(rolesIds)})
         newUser.roles= roles;
         
+        if (!newUser.notification_token) {
+            newUser.notification_token = 'default_token';
+        }
         const userSaved= await this.usersRepository.save(newUser);
         const rolesString = userSaved.roles.map(rol =>rol.id);
         

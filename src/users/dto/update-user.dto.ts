@@ -16,6 +16,8 @@ export class UpdateUserDto{
     @IsString()
     phone?:String;
 
+    @IsOptional()
     image?:String;
+    @IsOptional()
     notification_token?:String;
 }
