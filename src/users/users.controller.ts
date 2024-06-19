@@ -17,7 +17,7 @@ export class UsersController {
     //post--crear
     //put - patch -- actualizar
     //delete -- Borrar
-    @HasRoles(JwtRole.ADMIN,JwtRole.CLIENT)
+    @HasRoles(JwtRole.CLIENT)
     @UseGuards(JwtAuthGuard,JwtRolesGuard)
     @Get() // http://localhost/users -> GET
     findAll(){

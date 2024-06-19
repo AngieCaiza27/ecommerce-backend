@@ -5,11 +5,12 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
+import { CategoriesModule } from './categories/categories.module';
 
 
 @Module({
   imports: [
-
+    
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -19,14 +20,15 @@ import { RolesModule } from './roles/roles.module';
       database: 'ecommerce_baseDatos',
       entities: [__dirname +'/**/*.entity{.ts,.js}'],
       synchronize: true,
-    }),
-  
+    }),   
 
     UsersModule,
 
     AuthModule,
 
     RolesModule,
+
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,29 +1,29 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsString, IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
-export class RegisterAuthDto{
+export class RegisterAuthDto {
     
     @IsNotEmpty()
     @IsString()
-    name:string;
+    name: string;
 
     @IsNotEmpty()
     @IsString()
-    lastname:string;
+    lastname: string;
 
     @IsNotEmpty()
     @IsString()
-    @IsEmail({},{message:"El email no es valido"})
-    email:string;
+    @IsEmail({}, { message: 'El email no es valido' })
+    email: string;
 
     @IsNotEmpty()
     @IsString()
-    phone:string;
+    phone: string;
 
     @IsNotEmpty()
     @IsString()
-    @MinLength(6,{message:"La contraseña debe tener minimo 6 caracteres"})
-    password:string;
-
-    rolesIds:string[];
+    @MinLength(6, { message: 'La contraseña debe tener minimo 6 caracteres' })
+    password: string;
     
+    rolesIds: string[];
+
 }
