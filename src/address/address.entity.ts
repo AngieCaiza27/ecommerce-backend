@@ -1,6 +1,6 @@
+import { Order } from 'src/orders/order.entity';
 import { User } from 'src/users/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-//import { Order } from 'src/orders/order.entity';
 
 @Entity({name: 'address'})
 export class Address {
@@ -23,8 +23,8 @@ export class Address {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updated_at: Date;
 
-    //@OneToMany(() => Order, order => order.id)
-    //order: Order;
+    @OneToMany(() => Order, order => order.id)
+    order: Order;
 
     @ManyToOne(() => User, (user) => user.id)
     @JoinColumn({name: 'id_user'})

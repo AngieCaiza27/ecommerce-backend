@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 import { Category } from '../categories/category.entity';
+import { OrderHasProducts } from 'src/orders/order_has_products.entity';
 //import { OrderHasProducts } from '../orders/order_has_products.entity';
 
 @Entity({ name: 'products' })
@@ -36,9 +37,9 @@ export class Product {
     @JoinColumn({name: 'id_category'})
     category: Category
 
-   // @OneToMany(() => OrderHasProducts, (ohp) => ohp.product)
-   // @JoinColumn({ referencedColumnName: 'id_product' })
-    //orderHasProducts: OrderHasProducts[]
+    @OneToMany(() => OrderHasProducts, (ohp) => ohp.product)
+    @JoinColumn({ referencedColumnName: 'id_product' })
+    orderHasProducts: OrderHasProducts[]
 
 
 }
