@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { AddressModule } from './address/address.module';
 
 
 @Module({
@@ -32,6 +33,8 @@ import { ProductsModule } from './products/products.module';
     CategoriesModule,
 
     ProductsModule,
+
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],

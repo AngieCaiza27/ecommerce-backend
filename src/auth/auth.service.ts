@@ -64,9 +64,6 @@ export class AuthService {
     async login(loginData: LoginAuthDto) {
 
         const { email, password } = loginData;
-        if (!email || !password) {
-            throw new HttpException('El email y la contraseña son requeridos', HttpStatus.BAD_REQUEST);
-        }
         const userFound = await this.usersRepository.findOne({ 
             where: { email: email },
             relations: ['roles']
@@ -74,16 +71,14 @@ export class AuthService {
         if (!userFound) {
             throw new HttpException('El email no existe', HttpStatus.NOT_FOUND);
         }
-
-
         
         const isPasswordValid = await compare(password, userFound.password);
         if (!isPasswordValid) {
-            console.log('PASSWORD INCORRECTO');
-            
+                      
             // 403 FORBITTEN access denied
             throw new HttpException('La contraseña es incorrecta', HttpStatus.FORBIDDEN);
         }
+        console.log(password);
 
         const rolesIds = userFound.roles.map(rol => rol.id); //['CLIENT', 'ADMIN']
 
@@ -98,7 +93,7 @@ export class AuthService {
             token: 'Bearer ' + token
         }
 
-        ///delete data.user.password;
+        //delete data.user.password;
 
         return data;
     }
