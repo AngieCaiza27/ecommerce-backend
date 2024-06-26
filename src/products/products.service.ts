@@ -4,7 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './product.entity';
 import { Like, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
-//import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
+import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
 import asyncForEach = require('../utils/async_foreach');
 import storage = require('../utils/cloud_storage');
 
@@ -21,9 +21,9 @@ export class ProductsService {
         return this.productsRepository.findBy({ id_category: id_category });
     }
 
-    //async paginate(options: IPaginationOptions): Promise<Pagination<Product>> {
-        //return paginate<Product>(this.productsRepository, options);
-    //}
+    async paginate(options: IPaginationOptions): Promise<Pagination<Product>> {
+        return paginate<Product>(this.productsRepository, options);
+    }
 
     findByName(name: string) {
         return this.productsRepository.find({ where : { name: Like(`%${name}%`) }})

@@ -36,6 +36,8 @@ import { OrdersModule } from './orders/orders.module';
 
     ProductsModule,
 
+    //MercadoPagoModule,
+
     AddressModule,
 
     OrdersModule,

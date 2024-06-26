@@ -7,23 +7,35 @@ import { JwtRolesGuard } from '../auth/jwt/jwt-roles.guard';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-//import { Pagination } from 'nestjs-typeorm-paginate';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { Product } from './product.entity';
-//import { API } from 'src/config/config';
+import { API } from 'src/config/config';
 
 @Controller('products')
 export class ProductsController {
 
     constructor(private productsService: ProductsService) {}
 
-    @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
+    @HasRoles(JwtRole.ADMIN)
     @UseGuards(JwtAuthGuard, JwtRolesGuard)
     @Get() // http:localhost:3000/categories -> GET
     findAll() {
         return this.productsService.findAll();
     }
 
-    
+    @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
+    @UseGuards(JwtAuthGuard, JwtRolesGuard)
+    @Get('pagination') // http:localhost:3000/categories -> GET
+    async pagination(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+        @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit: number = 5,
+    ): Promise<Pagination<Product>> {
+        return this.productsService.paginate({
+            page,
+            limit,
+            route: `http://${API}:3000/products/pagination`
+        });
+    }
 
     @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
     @UseGuards(JwtAuthGuard, JwtRolesGuard)
@@ -39,9 +51,9 @@ export class ProductsController {
         return this.productsService.findByName(name);
     }
 
-    @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
+    @HasRoles(JwtRole.ADMIN)
     @UseGuards(JwtAuthGuard, JwtRolesGuard)
-    @Post() // http:localhost:3000/products -> POST
+    @Post() // http:localhost:3000/categories -> POST
     @UseInterceptors(FilesInterceptor('files[]', 2))
     create(
         @UploadedFiles(

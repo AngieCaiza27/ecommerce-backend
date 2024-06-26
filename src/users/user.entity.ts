@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { hash } from 'bcrypt';
 import { Rol } from 'src/roles/rol.entity';
-//import { Order } from 'src/orders/order.entity';
+import { Order } from 'src/orders/order.entity';
 import { Address } from 'src/address/address.entity';
 import { Exclude } from 'class-transformer';
 
@@ -53,8 +53,8 @@ export class User {
     @OneToMany(() => Address, address => address.id)
     address: Address;
     
-    //@OneToMany(() => Order, order => order.id)
-    //order: Order;
+    @OneToMany(() => Order, order => order.id)
+    order: Order;
 
     
     @BeforeInsert()
